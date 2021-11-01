@@ -1,4 +1,3 @@
-from typing import ForwardRef
 import numpy as np
 import sounddevice as sd
 import matplotlib.pyplot as plt
@@ -26,8 +25,12 @@ t = np.arange(np.ceil(tone_dur * fs)) / fs
 t = t.reshape(-1, 1)
 
 #* list of 1's and 0's
-play_1s = np.ones(np.ceil(tone_playtime * fs))
-play_0s = np.zeros(np.ceil(tone_pause * fs))
+play_1s = np.ones(int(np.ceil(tone_playtime * fs))) 
+play_0s = np.zeros(int(np.ceil(tone_pause * fs)))
+time_arr = np.concatenate((play_1s, play_0s))
+time_arr = np.repeat(time_arr, 100)
+print(time_arr.shape)
+#print(time_arr[:500])
 
 # target mono tone and distractor mono tone
 target_tone = tone_amp * np.sin(2 * np.pi * freq_t * t)
