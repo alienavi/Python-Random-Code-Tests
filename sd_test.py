@@ -18,7 +18,7 @@ from random import shuffle
     fs              -   sampling rate
 '''
 tone_amp = 1.0 #? full-scale is 1
-tone_dur = 2.5 #? 2.5 seconds
+tone_dur = 1.0 #? 2.5 seconds
 tone_playtime = 0.015 #? 20 milliseconds
 tone_pause = 0.01 #? 5 milliseconds
 total_tones = int(tone_dur/(tone_playtime + tone_pause)) #? (2.5/0.025) = 100
@@ -39,17 +39,20 @@ play_0s = np.zeros(int(tone_pause * fs))
 time_arr = np.concatenate((play_1s, play_0s))
 #* reshaping for stereo and multiplying by time ticks
 #* target tones (total_tones - total_distract) times
+trig_t = np.tile(time_arr, total_tones-total_distract)
 time_arr_t = np.tile(time_arr, total_tones-total_distract).reshape(-1,1)
 time_arr_t *= t[:len(time_arr_t)]
 #* distractor tones (total_distract) times
+trig_d = np.tile(time_arr, total_distract)
 time_arr_d = np.tile(time_arr, total_distract).reshape(-1,1)
 time_arr_d *= t[:len(time_arr_d)]
 
 #* target and distractor tones with trigger value
 target_tone = tone_amp * np.sin(2 * np.pi * freq_t * time_arr_t)
-target_tone[:,2] = 25
+target_tone[:,2] = 25*trig_t
+#target_tone[:,2] = 25
 distractor_tone = tone_amp * np.sin(2 * np.pi * freq_d * time_arr_d)
-distractor_tone[:,2] = 35
+distractor_tone[:,2] = 35*trig_d
 #* the final tone, containing both target and distractor before shuffling
 final_tone = np.concatenate((target_tone, distractor_tone))
 #* spliting into individual tones
@@ -74,7 +77,7 @@ tone_18CH[:, 6] = final_tone[:, 0]  #* tone on 7th channel
 tone_18CH[:, 7] = final_tone[:, 1]  #* tone on 8th channel
 
 #? change the trigger amplitude by explicitly replacing the 13th column
-tone_18CH[:, 12] = final_tone[:, 2] #* trigger on 13th channel
+tone_18CH[:, 11] = final_tone[:, 2] #* trigger on 13th channel
 
 #* plotting signals for visualizing
 fig = plt.figure()
@@ -94,7 +97,7 @@ ax3.set_title("18 Channel Array : Trig Actual")
 
 #? generate trigger signal
 #* modifying trig value, why? Don't ask me. 
-tone_18CH[:, 12] = [(trig/2 + (trig%2)*127.5)/(255*64) for trig in tone_18CH[:, 12]]
+tone_18CH[:, 11] = [(trig/2 + (trig%2)*127.5)/(255*64) for trig in tone_18CH[:, 11]]
 ax4 = fig.add_subplot(gs[2,:])
 ax4.plot(tone_18CH)
 ax4.grid()
