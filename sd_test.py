@@ -102,14 +102,22 @@ print(final_tone.shape)
 
 '''
     #? New frequency array to create multi-channel signal
-    creating a multi-channel tone
+    creating a multi-channel tone,
+    if you need to play a single mono tone on a particular channel
+    uncomment the following code, and set single tone frequency
 '''
+'''    
 freq = np.array([   0.0,    0.0,   0.0,   0.0,
                     0.0,    0.0,   0.0,   0.0,
                     0.0,    0.0,   0.0,   0.0,
                     0.0,    0.0,   0.0,   0.0,
                     0.0,    0.0])  #? channel 1 - target, channel 2 - distractor, channel 12 - trig
 tone_18CH = tone_amp * np.sin(2 * np.pi * freq * t[:len(final_tone)])
+'''
+'''
+    else use np.zeros to create time_ticks x 18 array (18 - number of channels)
+'''
+tone_18CH = np.zeros((len(final_tone),18))
 print(tone_18CH.shape)
 
 '''
