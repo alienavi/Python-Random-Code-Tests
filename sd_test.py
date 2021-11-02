@@ -18,10 +18,10 @@ from random import shuffle
     fs              -   sampling rate
 '''
 tone_amp = 1.0 #? full-scale is 1
-tone_dur = 5.0 #? 2.5 seconds
-tone_playtime = 0.015 #? 20 milliseconds
-tone_pause = 0.01 #? 5 milliseconds
-total_tones = int(tone_dur/(tone_playtime + tone_pause)) #? (2.5/0.025) = 100
+tone_dur = 5.0 #? 5 seconds
+tone_playtime = 0.015 #? 15 milliseconds
+tone_pause = 0.01 #? 10 milliseconds
+total_tones = int(tone_dur/(tone_playtime + tone_pause)) #? (5/0.025) = 200
 total_distract = 3 #? number of distract tones
 freq_t = np.array([1000.0, 1000.0, 0.0]) #? 1KHz Stereo, Trigger
 freq_d = np.array([1100.0, 1100.0, 0.0]) #? 1.1KHz Stereo, Trigger
