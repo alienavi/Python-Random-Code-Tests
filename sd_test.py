@@ -18,7 +18,7 @@ from random import shuffle
     fs              -   sampling rate
 '''
 tone_amp = 1.0 #? full-scale is 1
-tone_dur = 1.0 #? 2.5 seconds
+tone_dur = 5.0 #? 2.5 seconds
 tone_playtime = 0.015 #? 20 milliseconds
 tone_pause = 0.01 #? 5 milliseconds
 total_tones = int(tone_dur/(tone_playtime + tone_pause)) #? (2.5/0.025) = 100
