@@ -144,7 +144,7 @@ ax3.set_title("18 Channel Array : Trig Actual")
 
 '''
     #* modifying trig value, why? Don't ask me.
-    I don't know head or tail about this step,
+    I don't know head or tail about this step, error("Nah G")
     copied it from Jasmine's MATLAB scripts 
 '''
 tone_18CH[:, 11] = [(trig/2 + (trig%2)*127.5)/(255*64) for trig in tone_18CH[:, 11]]
